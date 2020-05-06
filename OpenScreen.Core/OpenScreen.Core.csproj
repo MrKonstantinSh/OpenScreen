@@ -43,9 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MouseCursor.cs" />
-    <Compile Include="Screenshot.cs" />
+    <Compile Include="Screenshot\Fps.cs" />
+    <Compile Include="Screenshot\MouseCursor.cs" />
+    <Compile Include="Screenshot\Screenshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Server.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
