@@ -15,28 +15,28 @@ namespace OpenScreen.Core.Screenshot
     /// Details of the DrawIconEx method:
     /// https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-drawiconex
     /// </summary>
-    class MouseCursor
+    internal class MouseCursor
     {
-        public const int CURSOR_SHOWING = 0x00000001;
-        public const int DI_NORMAL = 0x0003;
+        public const int CursorShowing = 0x00000001;
+        public const int DiNormal = 0x0003;
 
         /// <summary>
         /// Contains global cursor information.
         /// </summary>
         [StructLayout(LayoutKind.Sequential)]
-        public struct CURSORINFO
+        public struct CursorInfo
         {
             public int cbSize;            // The size of the structure, in bytes.
             public int flags;             // The cursor state.
             public IntPtr hCursor;        // A handle to the cursor.
-            public POINTAPI ptScreenPos;  // Screen coordinates of the cursor.
+            public PointApi ptScreenPos;  // Screen coordinates of the cursor.
         }
 
         /// <summary>
         /// Defines the x- and y- coordinates of a point.
         /// </summary>
         [StructLayout(LayoutKind.Sequential)]
-        public struct POINTAPI
+        public struct PointApi
         {
             public int x;
             public int y;
@@ -48,7 +48,7 @@ namespace OpenScreen.Core.Screenshot
         /// <param name="pci">A pointer to a CURSORINFO structure that receives the information.</param>
         /// <returns>If the function succeeds, the return value is nonzero.</returns>
         [DllImport("user32.dll")]
-        public static extern bool GetCursorInfo(out CURSORINFO pci);
+        public static extern bool GetCursorInfo(out CursorInfo pci);
 
         /// <summary>
         /// Draws an icon or cursor into the specified device context,

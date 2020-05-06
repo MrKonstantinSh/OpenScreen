@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using System;
+using System.Threading.Tasks;
 
 namespace OpenScreen.Core.Screenshot
 {
@@ -11,13 +12,23 @@ namespace OpenScreen.Core.Screenshot
     /// </summary>
     public class Screenshot
     {
+        // ReSharper disable once FunctionNeverReturns
+        public async Task TakeSeriesOfScreenshots(Fps fps)
+        {
+            while (true)
+            {
+                TakeScreenshot(true);
+                await Task.Delay((int)fps);
+            }
+        }
+
         /// <summary>
         /// Takes a screenshot.
         /// </summary>
         /// <param name="isDisplayCursor">Flag to display the mouse cursor in the screenshot.</param>
         public void TakeScreenshot(bool isDisplayCursor)
         {
-            Rectangle bounds = Screen.PrimaryScreen.Bounds;
+            var bounds = Screen.PrimaryScreen.Bounds;
 
             using (var bitmap = new Bitmap(bounds.Width, bounds.Height))
             using (var graphics = Graphics.FromImage(bitmap))
@@ -39,25 +50,34 @@ namespace OpenScreen.Core.Screenshot
         /// </summary>
         /// <param name="graphics">Drawing surface.</param>
         /// <param name="bounds">Screen bounds.</param>
-        private void AddCursorToScreenshot(Graphics graphics, Rectangle bounds)
+        private static void AddCursorToScreenshot(Graphics graphics, Rectangle bounds)
         {
-            MouseCursor.CURSORINFO pci;
-            pci.cbSize = Marshal.SizeOf(typeof(MouseCursor.CURSORINFO));
-
-            if (MouseCursor.GetCursorInfo(out pci))
+            if (graphics == null)
             {
-                if (pci.flags == MouseCursor.CURSOR_SHOWING)
-                {
-                    const int logicalWidth = 0;
-                    const int logicalHeight = 0;
-                    const int indexOfFrame = 0;
-
-                    MouseCursor.DrawIconEx(graphics.GetHdc(), pci.ptScreenPos.x - bounds.X,
-                        pci.ptScreenPos.y - bounds.Y, pci.hCursor, logicalWidth,
-                        logicalHeight, indexOfFrame, IntPtr.Zero, MouseCursor.DI_NORMAL);
-                    graphics.ReleaseHdc();
-                }
+                throw new ArgumentNullException(nameof(graphics));
             }
+
+            MouseCursor.CursorInfo pci;
+            pci.cbSize = Marshal.SizeOf(typeof(MouseCursor.CursorInfo));
+
+            if (!MouseCursor.GetCursorInfo(out pci))
+            {
+                return;
+            }
+
+            if (pci.flags != MouseCursor.CursorShowing)
+            {
+                return;
+            }
+
+            const int logicalWidth = 0;
+            const int logicalHeight = 0;
+            const int indexOfFrame = 0;
+
+            MouseCursor.DrawIconEx(graphics.GetHdc(), pci.ptScreenPos.x - bounds.X,
+                pci.ptScreenPos.y - bounds.Y, pci.hCursor, logicalWidth,
+                logicalHeight, indexOfFrame, IntPtr.Zero, MouseCursor.DiNormal);
+            graphics.ReleaseHdc();
         }
     }
 }
