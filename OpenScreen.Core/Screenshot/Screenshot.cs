@@ -1,36 +1,37 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
-using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
 using System;
-using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace OpenScreen.Core.Screenshot
 {
     /// <summary>
     /// Allows to create screenshots of the screen.
     /// </summary>
-    public class Screenshot
+    public static class Screenshot
     {
-        // ReSharper disable once FunctionNeverReturns
-        public async Task TakeSeriesOfScreenshots(Fps fps)
+        public static IEnumerable<Image> TakeSeriesOfScreenshots()
         {
             while (true)
             {
-                TakeScreenshot(true);
-                await Task.Delay((int)fps);
+                var screenshot = TakeScreenshot(true);
+
+                yield return screenshot;
             }
+            // ReSharper disable once IteratorNeverReturns
         }
 
         /// <summary>
         /// Takes a screenshot.
         /// </summary>
         /// <param name="isDisplayCursor">Flag to display the mouse cursor in the screenshot.</param>
-        public void TakeScreenshot(bool isDisplayCursor)
+        public static Bitmap TakeScreenshot(bool isDisplayCursor)
         {
             var bounds = Screen.PrimaryScreen.Bounds;
 
-            using (var bitmap = new Bitmap(bounds.Width, bounds.Height))
+            var bitmap = new Bitmap(bounds.Width, bounds.Height);
+
             using (var graphics = Graphics.FromImage(bitmap))
             {
                 graphics.CopyFromScreen(new Point(bounds.Left, bounds.Top),
@@ -41,7 +42,7 @@ namespace OpenScreen.Core.Screenshot
                     AddCursorToScreenshot(graphics, bounds);
                 }
 
-                bitmap.Save($"{Application.StartupPath}/ScreenTask.jpg", ImageFormat.Jpeg);
+                return bitmap;
             }
         }
 
