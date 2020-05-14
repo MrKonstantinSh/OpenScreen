@@ -25,7 +25,6 @@ namespace OpenScreen.Core.Mjpeg
 
                     yield return memoryStream;
                 }
-
             }
         }
     }

@@ -15,7 +15,8 @@ namespace OpenScreen.Core.Screenshot
         {
             while (true)
             {
-                var screenshot = TakeScreenshot(true);
+                var screenshot = TakeScreenshot(true, 
+                    Resolution.Resolutions.OneThousandAndEightyP);
 
                 yield return screenshot;
             }
@@ -26,7 +27,8 @@ namespace OpenScreen.Core.Screenshot
         /// Takes a screenshot.
         /// </summary>
         /// <param name="isDisplayCursor">Flag to display the mouse cursor in the screenshot.</param>
-        public static Bitmap TakeScreenshot(bool isDisplayCursor)
+        /// <param name="requiredResolution">Required screenshot resolution.</param>
+        private static Bitmap TakeScreenshot(bool isDisplayCursor, Resolution.Resolutions requiredResolution)
         {
             var bounds = Screen.PrimaryScreen.Bounds;
 
@@ -41,9 +43,11 @@ namespace OpenScreen.Core.Screenshot
                 {
                     AddCursorToScreenshot(graphics, bounds);
                 }
-
-                return bitmap;
             }
+
+            return Resolution.GetResolutionByHeight(bitmap.Height) != requiredResolution 
+                ? Resolution.SetResolution(bitmap, requiredResolution) 
+                : bitmap;
         }
 
         /// <summary>
@@ -78,6 +82,7 @@ namespace OpenScreen.Core.Screenshot
             MouseCursor.DrawIconEx(graphics.GetHdc(), pci.ptScreenPos.x - bounds.X,
                 pci.ptScreenPos.y - bounds.Y, pci.hCursor, logicalWidth,
                 logicalHeight, indexOfFrame, IntPtr.Zero, MouseCursor.DiNormal);
+
             graphics.ReleaseHdc();
         }
     }
