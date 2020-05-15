@@ -13,7 +13,7 @@ namespace OpenScreen.Core.Server
         /// </summary>
         /// <param name="server">Server socket.</param>
         /// <returns>An enumerated connection in an enumerated form.</returns>
-        public static IEnumerable<Socket> GetIncomingConnections(Socket server)
+        public static IEnumerable<Socket> GetIncomingConnections(this Socket server)
         {
             while (true)
             {

@@ -1,53 +1,63 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Windows.Forms;
-using System.Runtime.InteropServices;
-using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace OpenScreen.Core.Screenshot
 {
     /// <summary>
-    /// Allows to create screenshots of the screen.
+    /// Provides methods for creating screenshots.
     /// </summary>
     public static class Screenshot
     {
-        public static IEnumerable<Image> TakeSeriesOfScreenshots()
+        /// <summary>
+        /// Provides enumeration of screenshots.
+        /// </summary>
+        /// <param name="requiredResolution">Required screenshot resolution.</param>
+        /// <param name="isDisplayCursor">Whether to display the cursor in screenshots.</param>
+        /// <returns>Enumeration of screenshots.</returns>
+        public static IEnumerable<Image> TakeSeriesOfScreenshots(Resolution.Resolutions requiredResolution,
+            bool isDisplayCursor)
         {
+            var screenSize = new Size(Screen.PrimaryScreen.Bounds.Width,
+                Screen.PrimaryScreen.Bounds.Height);
+            var requiredSize = Resolution.GetResolutionSize(requiredResolution);
+
+            var rawImage = new Bitmap(screenSize.Width, screenSize.Height);
+            var rawGraphics = Graphics.FromImage(rawImage);
+                
+            var isNeedToScale = (screenSize != requiredSize);
+
+            var image = rawImage;
+            var graphics = rawGraphics;
+
+            if (isNeedToScale)
+            { 
+                image = new Bitmap(requiredSize.Width, requiredSize.Height);
+                graphics = Graphics.FromImage(image);
+            }
+
+            var source = new Rectangle(0, 0, screenSize.Width, screenSize.Height);
+            var destination = new Rectangle(0, 0, requiredSize.Width, requiredSize.Height);
+
             while (true)
             {
-                var screenshot = TakeScreenshot(true, 
-                    Resolution.Resolutions.OneThousandAndEightyP);
-
-                yield return screenshot;
-            }
-            // ReSharper disable once IteratorNeverReturns
-        }
-
-        /// <summary>
-        /// Takes a screenshot.
-        /// </summary>
-        /// <param name="isDisplayCursor">Flag to display the mouse cursor in the screenshot.</param>
-        /// <param name="requiredResolution">Required screenshot resolution.</param>
-        private static Bitmap TakeScreenshot(bool isDisplayCursor, Resolution.Resolutions requiredResolution)
-        {
-            var bounds = Screen.PrimaryScreen.Bounds;
-
-            var bitmap = new Bitmap(bounds.Width, bounds.Height);
-
-            using (var graphics = Graphics.FromImage(bitmap))
-            {
-                graphics.CopyFromScreen(new Point(bounds.Left, bounds.Top),
-                    Point.Empty, bounds.Size);
+                rawGraphics.CopyFromScreen(0, 0, 0, 0, screenSize);
 
                 if (isDisplayCursor)
                 {
-                    AddCursorToScreenshot(graphics, bounds);
+                    AddCursorToScreenshot(rawGraphics, source);
                 }
-            }
 
-            return Resolution.GetResolutionByHeight(bitmap.Height) != requiredResolution 
-                ? Resolution.SetResolution(bitmap, requiredResolution) 
-                : bitmap;
+                if (isNeedToScale)
+                {
+                    graphics.DrawImage(rawImage, destination, source, GraphicsUnit.Pixel);
+                }
+
+                yield return image;
+            }
+            // ReSharper disable once IteratorNeverReturns
         }
 
         /// <summary>

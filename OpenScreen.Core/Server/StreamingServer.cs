@@ -12,43 +12,39 @@ namespace OpenScreen.Core.Server
 {
     public class StreamingServer
     {
-        private readonly List<Socket> _clients;
         private readonly IEnumerable<Image> _images;
         private Thread _thread;
 
         public int Delay { get; }
 
-        public IEnumerable<Socket> Clients
+        public int NumberOfClients { get; private set; }
+
+        public bool IsRunning
         {
-            get
-            {
-                lock (_clients)
-                {
-                    return _clients ?? null;
-                }
-            }
-        }
-
-        public bool IsRunning => _thread != null && _thread.IsAlive;
-
-        /// <summary>
-        /// The constructor of the class that initializes the fields of the class.
-        /// </summary>
-        public StreamingServer() : this(Screenshot.Screenshot.TakeSeriesOfScreenshots())
-        {
-
+            get => _thread != null && _thread.IsAlive;
+            // ReSharper disable once FunctionRecursiveOnAllPaths
+            private set => IsRunning = value;
         }
 
         /// <summary>
         /// The constructor of the class that initializes the fields of the class.
         /// </summary>
-        private StreamingServer(IEnumerable<Image> images)
+        public StreamingServer(Resolution.Resolutions imageResolution, Fps fps, bool isDisplayCursor) 
+            : this(Screenshot.Screenshot.TakeSeriesOfScreenshots(imageResolution, isDisplayCursor),
+                fps)
         {
-            _clients = new List<Socket>();
+
+        }
+
+        /// <summary>
+        /// The constructor of the class that initializes the fields of the class.
+        /// </summary>
+        private StreamingServer(IEnumerable<Image> images, Fps fps)
+        {
             _thread = null;
             _images = images;
 
-            Delay = (int) Fps.Sixty;
+            Delay = (int)fps;
         }
 
         /// <summary>
@@ -85,22 +81,8 @@ namespace OpenScreen.Core.Server
             }
             finally
             {
-                lock (_clients)
-                {
-                    foreach (var socket in _clients)
-                    {
-                        try
-                        {
-                            socket.Close();
-                        }
-                        catch (Exception ex)
-                        {
-                            Console.WriteLine(ex.Message);
-                        }
-                    }
-
-                    _clients.Clear();
-                }
+                NumberOfClients = 0;
+                IsRunning = false;
 
                 _thread = null;
             }
@@ -118,10 +100,12 @@ namespace OpenScreen.Core.Server
                     SocketType.Stream, ProtocolType.Tcp);
 
                 server.Bind(new IPEndPoint(IPAddress.Parse("192.168.100.16"), (int)state));
-                server.Listen(10);
+                server.Listen(1);
 
-                foreach (var client in ServerSocketExtension.GetIncomingConnections(server))
+                foreach (var client in server.GetIncomingConnections())
+                {
                     ThreadPool.QueueUserWorkItem(StartClientThread, client);
+                }
             }
             finally
             {
@@ -137,25 +121,22 @@ namespace OpenScreen.Core.Server
         {
             var socket = (Socket)client;
 
-            lock (_clients)
-            {
-                _clients.Add(socket);
-            }
+            NumberOfClients += 1;
 
             try
             {
-                using (var wr = new MjpegWriter(new NetworkStream(socket)))
+                using (var mjpegWriter = new MjpegWriter(new NetworkStream(socket, true)))
                 {
 
                     // Writes the response header to the client.
-                    wr.WriteHeaders();
+                    mjpegWriter.WriteHeaders();
 
                     // Streams the images from the source to the client.
                     foreach (var imgStream in _images.GetMjpegStream())
                     {
                         Thread.Sleep(Delay);
 
-                        wr.WriteImage(imgStream);
+                        mjpegWriter.WriteImage(imgStream);
                     }
                 }
             }
@@ -169,9 +150,15 @@ namespace OpenScreen.Core.Server
             }
             finally
             {
-                lock (_clients)
+                NumberOfClients -= 2;
+
+                try
                 {
-                    _clients?.Remove(socket);
+                    socket.Shutdown(SocketShutdown.Both);
+                }
+                catch (ObjectDisposedException)
+                {
+                    socket.Close();
                 }
             }
         }
