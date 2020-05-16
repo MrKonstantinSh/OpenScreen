@@ -30,8 +30,16 @@ namespace OpenScreen.Core.Server
         /// The constructor of the class that initializes the fields of the class.
         /// </summary>
         public StreamingServer(Resolution.Resolutions imageResolution, Fps fps, bool isDisplayCursor) 
-            : this(Screenshot.Screenshot.TakeSeriesOfScreenshots(imageResolution, isDisplayCursor),
-                fps)
+            : this(Screenshot.Screenshot.TakeSeriesOfScreenshots(imageResolution, isDisplayCursor), fps)
+        {
+
+        }
+
+        /// <summary>
+        /// The constructor of the class that initializes the fields of the class.
+        /// </summary>
+        public StreamingServer(string applicationName, Fps fps, bool isDisplayCursor) 
+            : this(Screenshot.Screenshot.TakeSeriesOfScreenshotsAppWindow(applicationName, isDisplayCursor), fps)
         {
 
         }

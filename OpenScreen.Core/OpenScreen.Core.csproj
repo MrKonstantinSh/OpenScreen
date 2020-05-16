@@ -46,9 +46,9 @@
     <Compile Include="Mjpeg\MjpegConstants.cs" />
     <Compile Include="Mjpeg\MjpegStream.cs" />
     <Compile Include="Mjpeg\MjpegWriter.cs" />
+    <Compile Include="Screenshot\ApplicationWindow.cs" />
     <Compile Include="Screenshot\Fps.cs" />
     <Compile Include="Screenshot\MouseCursor.cs" />
-    <Compile Include="Screenshot\Quality.cs" />
     <Compile Include="Screenshot\Resolution.cs" />
     <Compile Include="Screenshot\Screenshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

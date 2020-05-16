@@ -15,7 +15,7 @@ namespace OpenScreen.Core.Screenshot
     /// Details of the DrawIconEx method:
     /// https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-drawiconex
     /// </summary>
-    internal class MouseCursor
+    internal static class MouseCursor
     {
         public const int CursorShowing = 0x00000001;
         public const int DiNormal = 0x0003;
