@@ -87,7 +87,7 @@ namespace OpenScreen.Core.Screenshot
                 var hdc = graphics.GetHdc();
 
                 if (!ApplicationWindow.PrintWindow(windowHandle, hdc,
-                    ApplicationWindow.DrawAllWindow))
+                    ApplicationWindow.DrawClientOnly))
                 {
                     var error = Marshal.GetLastWin32Error();
                     throw new System.ComponentModel.Win32Exception($"An error occurred while creating a screenshot"
@@ -113,7 +113,7 @@ namespace OpenScreen.Core.Screenshot
         /// </summary>
         /// <param name="graphics">Drawing surface.</param>
         /// <param name="bounds">Screen bounds.</param>
-        public static void AddCursorToScreenshot(Graphics graphics, Rectangle bounds)
+        private static void AddCursorToScreenshot(Graphics graphics, Rectangle bounds)
         {
             if (graphics == null)
             {
