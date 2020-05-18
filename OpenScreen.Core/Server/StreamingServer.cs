@@ -94,9 +94,12 @@ namespace OpenScreen.Core.Server
         /// <summary>
         /// Starts the server on the specified port.
         /// </summary>
-        /// <param name="port">Port.</param>
-        public void Start(int port)
+        /// <param name="ipAddress">The IP address on which to start the server.</param>
+        /// <param name="port">Server port.</param>
+        public void Start(string ipAddress, int port)
         {
+            var serverConfig = new ServerConfig(ipAddress, port);
+
             lock (this)
             {
                 _thread = new Thread(StartServerThread)
@@ -104,7 +107,7 @@ namespace OpenScreen.Core.Server
                     IsBackground = true
                 };
 
-                _thread.Start(port);
+                _thread.Start(serverConfig);
             }
         }
 
@@ -137,15 +140,18 @@ namespace OpenScreen.Core.Server
         /// <summary>
         /// Starts the server in a separate thread.
         /// </summary>
-        /// <param name="state">Port.</param>
-        private void StartServerThread(object state)
+        /// <param name="config">IP address and port on which you want to start the server.</param>
+        private void StartServerThread(object config)
         {
+            var serverConfig = (ServerConfig)config;
+
             try
             {
                 _serverSocket = new Socket(AddressFamily.InterNetwork,
                     SocketType.Stream, ProtocolType.Tcp);
 
-                _serverSocket.Bind(new IPEndPoint(IPAddress.Parse("192.168.100.16"), (int)state));
+                _serverSocket.Bind(new IPEndPoint(IPAddress.Parse(serverConfig.IpAddress),
+                    serverConfig.Port));
                 _serverSocket.Listen(10);
 
                 foreach (var client in _serverSocket.GetIncomingConnections())

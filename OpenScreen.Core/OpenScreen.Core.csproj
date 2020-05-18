@@ -54,6 +54,7 @@
     <Compile Include="Screenshot\Resolution.cs" />
     <Compile Include="Screenshot\Screenshot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Server\ServerConfig.cs" />
     <Compile Include="Server\ServerSocketExtension.cs" />
     <Compile Include="Server\StreamingServer.cs" />
   </ItemGroup>
