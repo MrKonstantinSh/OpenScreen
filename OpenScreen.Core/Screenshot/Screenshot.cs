@@ -87,7 +87,7 @@ namespace OpenScreen.Core.Screenshot
                 var hdc = graphics.GetHdc();
 
                 if (!ApplicationWindow.PrintWindow(windowHandle, hdc,
-                    ApplicationWindow.DrawClientOnly))
+                    ApplicationWindow.DrawAllWindow))
                 {
                     var error = Marshal.GetLastWin32Error();
                     throw new System.ComponentModel.Win32Exception($"An error occurred while creating a screenshot"
