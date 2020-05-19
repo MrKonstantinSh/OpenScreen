@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         Title="OpenScreen" MinHeight="430" MinWidth="600" Height="430" Width="650"
-        Icon="Resources/favicon.ico" Loaded="MainWindow_OnLoaded" Closed="MainWindow_OnClosed">
+        Icon="Resources/favicon.ico" Loaded="MainWindow_OnLoaded" Closed="MainWindow_OnClosed"
+        WindowStartupLocation="CenterScreen">
     <Grid>
         <Label Content="IP Address:" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.021,-0.367" Name="LblIpAddress"/>
         <ComboBox Margin="84,23,218.2,0" VerticalAlignment="Top" Cursor="Hand" Name="CbIpAddress"/>
