@@ -1,0 +1,64 @@
+﻿<Window x:Class="OpenScreen.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="OpenScreen" MinHeight="430" MinWidth="600" Height="430" Width="650"
+        Icon="Resources/favicon.ico" Loaded="MainWindow_OnLoaded" Closed="MainWindow_OnClosed">
+    <Grid>
+        <Label Content="IP Address:" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.021,-0.367" Name="LblIpAddress"/>
+        <ComboBox Margin="84,23,218.2,0" VerticalAlignment="Top" Cursor="Hand" Name="CbIpAddress"/>
+        <Label Content="Port:" Margin="0,20,179.6,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="34" Name="LblPort"/>
+        <TextBox Height="22" Margin="0,23,15,0" TextWrapping="NoWrap" Text="3030" VerticalAlignment="Top" HorizontalAlignment="Right" Width="160" Name="TbPort"/>
+        <Label Content="URL:" HorizontalAlignment="Left" Margin="10,53,0,0" VerticalAlignment="Top" Name="LblUrl"/>
+        <TextBox Height="22" Margin="84,55,15.2,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" IsReadOnly="True" Name="TbUrl"/>
+        <Label Content="FPS:" HorizontalAlignment="Left" Margin="10,85,0,0" VerticalAlignment="Top" Name="LblFps"/>
+        <ComboBox HorizontalAlignment="Left" Margin="84,87,0,0" VerticalAlignment="Top" Width="100" Cursor="Hand" Name="CbFps">
+            <ComboBoxItem Content="120 FPS" HorizontalAlignment="Left" Width="98.4" IsSelected="True"/>
+            <ComboBoxItem Content="60 FPS" HorizontalAlignment="Left" Width="98.4"/>
+            <ComboBoxItem Content="30 FPS" HorizontalAlignment="Left" Width="98.4"/>
+            <ComboBoxItem Content="15 FPS" HorizontalAlignment="Left" Width="98.4"/>
+        </ComboBox>
+        <RadioButton Content="Stream full screen" Margin="13,118,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="114" IsChecked="True" Cursor="Hand" Name="RbFullScreen" Checked="RbOption_Checked"/>
+        <RadioButton Content="Stream application window" Margin="159,118,0,0" VerticalAlignment="Top" HorizontalAlignment="Left" Width="165" Cursor="Hand" Name="RbAppWindow" Checked="RbOption_Checked"/>
+        <GroupBox Header="Stream settings for full screen" HorizontalAlignment="Left" Height="90" Margin="13,138,0,0" VerticalAlignment="Top" Width="311" Name="GbFullScreenSettings">
+            <StackPanel Orientation="Vertical" Margin="0,10,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="Screen resolution:" Name="LblScreenResolution"/>
+                    <ComboBox Width="187" Cursor="Hand" Name="CbScreenResolution">
+                        <ComboBoxItem Content="1920x1080 (1080p)" HorizontalAlignment="Left" Width="184.4" IsSelected="True"/>
+                        <ComboBoxItem Content="1280x720 (720p)" HorizontalAlignment="Left" Width="184.4"/>
+                        <ComboBoxItem Content="854x480 (480p)" HorizontalAlignment="Left" Width="184.4"/>
+                        <ComboBoxItem Content="480x360 (360p)" HorizontalAlignment="Left" Width="184.4"/>
+                        <ComboBoxItem Content="352x240 (240p)" HorizontalAlignment="Left" Width="184.4"/>
+                    </ComboBox>
+                </StackPanel>
+                <CheckBox Content="Show cursor" Margin="5,10,170,0" IsChecked="True" Cursor="Hand" Name="ChBFullScreenShowCursor"/>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox Header="Settings for the application window stream" HorizontalAlignment="Left" Height="90" Margin="13,235,0,0" VerticalAlignment="Top" Width="311" IsEnabled="False" Name="GbAppWinSettings">
+            <StackPanel Orientation="Vertical" Margin="0,10,0,0">
+                <StackPanel Orientation="Horizontal">
+                    <Label Content="App window:" Margin="0,0,26,0" Name="LblAppWindow"/>
+                    <ComboBox Width="187" Cursor="Hand" Name="CbAppWindow" DropDownOpened="CbAppWindow_OnDropDownOpened"/>
+                </StackPanel>
+                <CheckBox Content="Show cursor" Margin="5,10,170,0" IsChecked="True" Cursor="Hand" Name="ChBAppWindowShowCursor"/>
+            </StackPanel>
+        </GroupBox>
+        <Button Content="Start stream" HorizontalAlignment="Left" Margin="13,330,0,0" VerticalAlignment="Top" Width="311" Height="30" Cursor="Hand" Name="BtnStartStopStream" Click="BtnStartStopStream_Click"/>
+        <GroupBox Header="Information" Height="304" VerticalAlignment="Top" Margin="329,82,15.2,0" Name="GbStreamInfo">
+            <StackPanel Orientation="Vertical">
+                <RichTextBox Height="241" Margin="5,5,5.2,0" VerticalAlignment="Top" IsReadOnly="True" Name="RtbInfo" Block.LineHeight="1">
+                    <FlowDocument>
+                        <Paragraph>
+                            <Run Text=""/>
+                        </Paragraph>
+                    </FlowDocument>
+                </RichTextBox>
+                <Button Content="Clear" Margin="5,5,5.2,5" Height="25" Cursor="Hand" Name="BtnClearInfo" Click="BtnClearInfo_Click"/>
+            </StackPanel>
+        </GroupBox>
+        <Label Content="Connected users: 0" HorizontalAlignment="Left" Margin="7,360,0,0" VerticalAlignment="Top" Name="LblConnectedUsers"/>
+    </Grid>
+</Window>
