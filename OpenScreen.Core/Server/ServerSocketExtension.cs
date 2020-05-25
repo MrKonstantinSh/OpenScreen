@@ -19,7 +19,6 @@ namespace OpenScreen.Core.Server
             {
                 yield return server.Accept();
             }
-            // ReSharper disable once IteratorNeverReturns
         }
     }
 }

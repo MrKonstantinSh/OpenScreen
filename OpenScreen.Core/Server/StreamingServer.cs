@@ -212,7 +212,7 @@ namespace OpenScreen.Core.Server
             }
             catch (Exception)
             {
-                // ignored
+                
             }
             finally
             {
