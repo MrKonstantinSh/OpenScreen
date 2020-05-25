@@ -1,12 +1,14 @@
-﻿namespace OpenScreen.Core.Server
+﻿using System.Net;
+
+namespace OpenScreen.Core.Server
 {
     internal class ServerConfig
     {
-        public string IpAddress { get; }
+        public IPAddress IpAddress { get; }
 
         public int Port { get; }
 
-        public ServerConfig(string ipAddress, int port)
+        public ServerConfig(IPAddress ipAddress, int port)
         {
             IpAddress = ipAddress;
             Port = port;

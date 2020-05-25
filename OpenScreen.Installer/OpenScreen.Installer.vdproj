@@ -15,6 +15,12 @@
     {
         "Entry"
         {
+        "MsmKey" = "8:_190FC70280884313A63789D9F937DDA8"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_514B7EF9EDF34AEDB25BD5622BE0143B"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
@@ -27,32 +33,26 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_A71A9DB9824B415689D88C83FB108DED"
-        "OwnerKey" = "8:_UNDEFINED"
+        "MsmKey" = "8:_F3778D33864EE7D62FB1CCA256364597"
+        "OwnerKey" = "8:_514B7EF9EDF34AEDB25BD5622BE0143B"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
-        "MsmKey" = "8:_BFADAA6E2196A6FB2E0ED13487AB2649"
+        "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_514B7EF9EDF34AEDB25BD5622BE0143B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_F3778D33864EE7D62FB1CCA256364597"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_56ED481DF20EEA7CB91BA9F7D04B658F"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_514B7EF9EDF34AEDB25BD5622BE0143B"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_BFADAA6E2196A6FB2E0ED13487AB2649"
         "MsmSig" = "8:_UNDEFINED"
         }
     }
@@ -73,6 +73,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
         "Release"
         {
@@ -89,6 +105,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -118,6 +150,26 @@
         }
         "File"
         {
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_190FC70280884313A63789D9F937DDA8"
+            {
+            "SourcePath" = "8:..\\OpenScreen\\favicon.ico"
+            "TargetName" = "8:favicon.ico"
+            "Tag" = "8:"
+            "Folder" = "8:_B519726EA64F4E3CB3EB0A6DA800C5B0"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_56ED481DF20EEA7CB91BA9F7D04B658F"
             {
             "AssemblyRegister" = "3:1"
@@ -149,34 +201,14 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_A71A9DB9824B415689D88C83FB108DED"
-            {
-            "SourcePath" = "8:..\\OpenScreen\\favicon.ico"
-            "TargetName" = "8:favicon.ico"
-            "Tag" = "8:"
-            "Folder" = "8:_B519726EA64F4E3CB3EB0A6DA800C5B0"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_BFADAA6E2196A6FB2E0ED13487AB2649"
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_F3778D33864EE7D62FB1CCA256364597"
             {
             "AssemblyRegister" = "3:1"
             "AssemblyIsInGAC" = "11:FALSE"
             "AssemblyAsmDisplayName" = "8:OpenScreen.Core, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL"
                 "ScatterAssemblies"
                 {
-                    "_BFADAA6E2196A6FB2E0ED13487AB2649"
+                    "_F3778D33864EE7D62FB1CCA256364597"
                     {
                     "Name" = "8:OpenScreen.Core.dll"
                     "Attributes" = "3:512"
@@ -268,7 +300,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:OpenScreen"
         "ProductCode" = "8:{D0658EEB-C374-4C7D-9CA1-221A14C1202B}"
-        "PackageCode" = "8:{9E1942B2-2259-409B-93CC-CEB53F8051C0}"
+        "PackageCode" = "8:{37DF107B-7F8E-4F81-B579-73EF56EE9A3A}"
         "UpgradeCode" = "8:{5E189F74-E8FD-4F8D-8E41-D82D210DCC42}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -399,7 +431,7 @@
             "Target" = "8:_514B7EF9EDF34AEDB25BD5622BE0143B"
             "Folder" = "8:_FED608165A1C454EB1B58F3B0CFD38D2"
             "WorkingFolder" = "8:_B519726EA64F4E3CB3EB0A6DA800C5B0"
-            "Icon" = "8:_A71A9DB9824B415689D88C83FB108DED"
+            "Icon" = "8:_190FC70280884313A63789D9F937DDA8"
             "Feature" = "8:"
             }
             "{970C0BB2-C7D0-45D7-ABFA-7EC378858BC0}:_CD445717BFD1431896713B2FE3B7B128"
@@ -413,7 +445,7 @@
             "Target" = "8:_514B7EF9EDF34AEDB25BD5622BE0143B"
             "Folder" = "8:_3B66264648C34A9D96314DEE6B88856C"
             "WorkingFolder" = "8:_B519726EA64F4E3CB3EB0A6DA800C5B0"
-            "Icon" = "8:_A71A9DB9824B415689D88C83FB108DED"
+            "Icon" = "8:_190FC70280884313A63789D9F937DDA8"
             "Feature" = "8:"
             }
         }

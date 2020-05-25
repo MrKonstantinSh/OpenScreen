@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net.NetworkInformation;
+using System.Net;
 using System.Net.Sockets;
 using System.Windows;
 using System.Windows.Documents;
@@ -22,15 +22,6 @@ namespace OpenScreen
 
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
-            // Filling the combo box with IP addresses.
-            var allIpv4Addresses = GetAllIpv4Addresses();
-            foreach (var (ipInfo, ipAddress) in allIpv4Addresses)
-            {
-                CbIpAddress.Items.Add($"{ipAddress} - {ipInfo}");
-            }
-
-            CbIpAddress.SelectedIndex = 0;
-
             // Filling the combo box with running applications.
             var runningApps = GetInfoAboutRunningApps();
             foreach (var runningApp in runningApps)
@@ -105,9 +96,11 @@ namespace OpenScreen
 
                     PrintInfo(UiConstants.ServerConfiguration);
 
-                    var ipAddress = CbIpAddress.Text.Split(' ')[0];
+                    var ipAddress = IPAddress.Parse(TbIpAddress.Text);
                     var port = int.Parse(TbPort.Text);
                     var fps = GetFpsFromComboBox(CbFps.Text);
+
+                    CheckSocket(ipAddress, port);
 
                     TbUrl.Text = $"http://{ipAddress}:{port}";
 
@@ -121,10 +114,19 @@ namespace OpenScreen
                 }
                 catch (FormatException)
                 {
-                    MessageBox.Show(UiConstants.PortErrorMessage, UiConstants.ErrorTitle,
+                    MessageBox.Show(UiConstants.PortOrIpErrorMessage, UiConstants.ErrorTitle,
                         MessageBoxButton.OK, MessageBoxImage.Error);
 
                     ConfigureUiWhenServerStops();
+                    PrintInfo(UiConstants.ServerStop);
+                }
+                catch (SocketException)
+                {
+                    MessageBox.Show(UiConstants.IpAddressErrorMessage, UiConstants.ErrorTitle,
+                            MessageBoxButton.OK, MessageBoxImage.Error);
+
+                    ConfigureUiWhenServerStops();
+                    PrintInfo(UiConstants.ServerStop);
                 }
             }
             else
@@ -151,23 +153,6 @@ namespace OpenScreen
         }
 
         /// <summary>
-        /// Provides information about the network interfaces found on this PC.
-        /// </summary>
-        /// <returns>Information about available network interfaces.</returns>
-        private static IEnumerable<Tuple<string, string>> GetAllIpv4Addresses()
-        {
-            var ipList = new List<Tuple<string, string>>();
-            foreach (var networkInterface in NetworkInterface.GetAllNetworkInterfaces())
-            {
-                ipList.AddRange(from ipInfo in networkInterface.GetIPProperties().UnicastAddresses 
-                    where ipInfo.Address.AddressFamily == AddressFamily.InterNetwork 
-                    select Tuple.Create(networkInterface.Name, ipInfo.Address.ToString()));
-            }
-
-            return ipList;
-        }
-
-        /// <summary>
         /// Provides information about running applications on a PC.
         /// </summary>
         /// <returns>The titles of the main windows of running applications.</returns>
@@ -179,6 +164,34 @@ namespace OpenScreen
                 where !string.IsNullOrEmpty(process.MainWindowTitle) 
                       && process.MainWindowTitle != UiConstants.MicrosoftTextInputApp
                 select process.MainWindowTitle).ToList();
+        }
+
+        /// <summary>
+        /// Checks the correctness of the IP address and port.
+        /// </summary>
+        /// <param name="ipAddress">IP address.</param>
+        /// <param name="port">Port.</param>
+        private static void CheckSocket(IPAddress ipAddress, int port)
+        {
+            Socket testSocket = null;
+
+            try
+            {
+                testSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream,
+                    ProtocolType.Tcp);
+                testSocket.Bind(new IPEndPoint(ipAddress, port));
+            }
+            finally
+            {
+                try
+                {
+                    testSocket.Shutdown(SocketShutdown.Both);
+                }
+                catch
+                {
+                    testSocket.Close();
+                }
+            }
         }
 
         /// <summary>
@@ -243,26 +256,23 @@ namespace OpenScreen
         /// <param name="ipAddress">IP address of the server.</param>
         /// <param name="port">Server port.</param>
         /// <param name="fps">FPS stream.</param>
-        private void StartStreamingServer(string ipAddress, int port, Fps fps)
+        private void StartStreamingServer(IPAddress ipAddress, int port, Fps fps)
         {
+
             if (RbFullScreen.IsChecked == true)
             {
                 var resolution = GetResolutionFromComboBox(CbScreenResolution.Text);
                 var isDisplayCursor = ChBFullScreenShowCursor.IsChecked != null
-                                      && (bool)ChBFullScreenShowCursor.IsChecked;
-
+                    && (bool)ChBFullScreenShowCursor.IsChecked;
 
                 _streamingServer = StreamingServer.GetInstance(resolution, fps, isDisplayCursor);
                 _streamingServer.Start(ipAddress, port);
-
-
-
             }
             else if (RbAppWindow.IsChecked == true)
             {
                 var applicationName = CbAppWindow.Text;
                 var isDisplayCursor = ChBAppWindowShowCursor.IsChecked != null
-                                      && (bool)ChBAppWindowShowCursor.IsChecked;
+                    && (bool)ChBAppWindowShowCursor.IsChecked;
 
                 _streamingServer = StreamingServer.GetInstance(applicationName, fps, isDisplayCursor);
                 _streamingServer.Start(ipAddress, port);
@@ -274,7 +284,7 @@ namespace OpenScreen
         /// </summary>
         private void ConfigureUiAtServerStartup()
         {
-            CbIpAddress.IsEnabled = false;
+            TbIpAddress.IsEnabled = false;
             TbPort.IsEnabled = false;
             CbFps.IsEnabled = false;
             RbFullScreen.IsEnabled = false;
@@ -291,7 +301,7 @@ namespace OpenScreen
         /// </summary>
         private void ConfigureUiWhenServerStops()
         {
-            CbIpAddress.IsEnabled = true;
+            TbIpAddress.IsEnabled = true;
             TbPort.IsEnabled = true;
             CbFps.IsEnabled = true;
             RbFullScreen.IsEnabled = true;

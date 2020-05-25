@@ -9,7 +9,7 @@
         WindowStartupLocation="CenterScreen">
     <Grid>
         <Label Content="IP Address:" HorizontalAlignment="Left" Margin="10,20,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.021,-0.367" Name="LblIpAddress"/>
-        <ComboBox Margin="84,23,218.2,0" VerticalAlignment="Top" Cursor="Hand" Name="CbIpAddress"/>
+        <TextBox Height="22" Margin="84,23,219,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" x:Name="TbIpAddress"/>
         <Label Content="Port:" Margin="0,20,179.6,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="34" Name="LblPort"/>
         <TextBox Height="22" Margin="0,23,15,0" TextWrapping="NoWrap" Text="3030" VerticalAlignment="Top" HorizontalAlignment="Right" Width="160" Name="TbPort"/>
         <Label Content="URL:" HorizontalAlignment="Left" Margin="10,53,0,0" VerticalAlignment="Top" Name="LblUrl"/>

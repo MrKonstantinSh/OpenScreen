@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using OpenScreen.Core.Mjpeg;
+using System.Diagnostics;
 
 namespace OpenScreen.Core.Server
 {
@@ -96,7 +97,7 @@ namespace OpenScreen.Core.Server
         /// </summary>
         /// <param name="ipAddress">The IP address on which to start the server.</param>
         /// <param name="port">Server port.</param>
-        public void Start(string ipAddress, int port)
+        public void Start(IPAddress ipAddress, int port)
         {
             var serverConfig = new ServerConfig(ipAddress, port);
 
@@ -150,7 +151,7 @@ namespace OpenScreen.Core.Server
                 _serverSocket = new Socket(AddressFamily.InterNetwork,
                     SocketType.Stream, ProtocolType.Tcp);
 
-                _serverSocket.Bind(new IPEndPoint(IPAddress.Parse(serverConfig.IpAddress),
+                _serverSocket.Bind(new IPEndPoint(serverConfig.IpAddress,
                     serverConfig.Port));
                 _serverSocket.Listen(10);
 

@@ -25,7 +25,8 @@
         #region Errors
 
         public const string ErrorTitle = "Error";
-        public const string PortErrorMessage = "Enter the correct port.";
+        public const string PortOrIpErrorMessage = "Enter the correct port and IP address.";
+        public const string IpAddressErrorMessage = "Enter the correct IP address.";
 
         #endregion
 
