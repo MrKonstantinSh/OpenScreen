@@ -5,6 +5,9 @@ using System.Text;
 
 namespace OpenScreen.Core.Screenshot.WinFeatures
 {
+    /// <summary>
+    /// Provides information about running applications that you can stream.
+    /// </summary>
     public static class RunningApplications
     {
         private const int GwlStyle = -16;          // Sets a new window style.

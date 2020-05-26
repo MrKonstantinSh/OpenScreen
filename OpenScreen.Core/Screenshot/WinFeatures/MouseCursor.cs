@@ -6,7 +6,7 @@ namespace OpenScreen.Core.Screenshot.WinFeatures
     /// <summary>
     /// Class for working with the mouse cursor.
     /// 
-    /// Details of the CURSORINFO structure:
+    /// Details of the CursorInfo structure:
     /// https://docs.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-cursorinfo
     /// 
     /// Details of the GetCursorInfo method:

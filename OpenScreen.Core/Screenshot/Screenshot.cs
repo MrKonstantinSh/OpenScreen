@@ -28,7 +28,7 @@ namespace OpenScreen.Core.Screenshot
             var rawImage = new Bitmap(screenSize.Width, screenSize.Height);
             var rawGraphics = Graphics.FromImage(rawImage);
                 
-            var isNeedToScale = (screenSize != requiredSize);
+            bool isNeedToScale = screenSize != requiredSize;
 
             var image = rawImage;
             var graphics = rawGraphics;
@@ -58,7 +58,6 @@ namespace OpenScreen.Core.Screenshot
 
                 yield return image;
             }
-            // ReSharper disable once IteratorNeverReturns
         }
 
         /// <summary>
