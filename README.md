@@ -62,7 +62,7 @@ Screenshots of a running application:
 ### Built With
 * [Visual Studio 2019](https://visualstudio.microsoft.com/vs/)
 * [.NET Framework 4.7.2](https://dotnet.microsoft.com/download/dotnet-framework/net472)
-* [C# 8.0](https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-8)
+* [C# 7.3](https://docs.microsoft.com/en-us/dotnet/csharp/whats-new/csharp-7-3)
 
 
 <!-- GETTING STARTED -->
@@ -79,6 +79,9 @@ Screenshots of a running application:
 > cd ./ProjectFolder
 ```
 
+**OR**
+
+DOWNLOAD [OpenScreen-Installer.msi](https://github.com/MrKonstantinSh/OpenScreen/releases/download/v1.1/OpenScreen-Installer.msi)
 
 <!-- ROADMAP -->
 ## Roadmap
