@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Runtime.InteropServices;
 
-namespace OpenScreen.Core.Screenshot
+namespace OpenScreen.Core.Screenshot.WinFeatures
 {
     /// <summary>
     /// Provides methods for obtaining information about the application window.

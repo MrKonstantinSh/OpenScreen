@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.InteropServices;
 
-namespace OpenScreen.Core.Screenshot
+namespace OpenScreen.Core.Screenshot.WinFeatures
 {
     /// <summary>
     /// Class for working with the mouse cursor.

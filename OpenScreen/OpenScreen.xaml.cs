@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Threading;
 using OpenScreen.Core.Screenshot;
+using OpenScreen.Core.Screenshot.WinFeatures;
 using OpenScreen.Core.Server;
 
 namespace OpenScreen
@@ -156,14 +157,9 @@ namespace OpenScreen
         /// Provides information about running applications on a PC.
         /// </summary>
         /// <returns>The titles of the main windows of running applications.</returns>
-        private static List<string> GetInfoAboutRunningApps()
+        private static IEnumerable<string> GetInfoAboutRunningApps()
         {
-            var processes = System.Diagnostics.Process.GetProcesses();
-
-            return (from process in processes 
-                where !string.IsNullOrEmpty(process.MainWindowTitle) 
-                      && process.MainWindowTitle != UiConstants.MicrosoftTextInputApp
-                select process.MainWindowTitle).ToList();
+            return RunningApplications.GetListOfRunningApps();
         }
 
         /// <summary>
