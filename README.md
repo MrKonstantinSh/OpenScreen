@@ -19,9 +19,9 @@
     <br />    
     <br />
     <a href="https://github.com/MrKonstantinSh/OpenScreen/releases">Releases</a>
-    ·
+    Â·
     <a href="https://github.com/MrKonstantinSh/OpenScreen/issues">Report Bug</a>
-    ·
+    Â·
     <a href="https://github.com/MrKonstantinSh/OpenScreen/issues">Request Feature</a>
   </p>
 </p>
@@ -124,5 +124,5 @@ Project Link: [https://github.com/MrKonstantinSh/OpenScreen](https://github.com/
 [issues-shield]: https://img.shields.io/github/issues/MrKonstantinSh/OpenScreen.svg?style=flat-square
 [issues-url]: https://github.com/MrKonstantinSh/OpenScreen/issues
 [license-shield]: https://img.shields.io/github/license/MrKonstantinSh/OpenScreen.svg?style=flat-square
-[license-url]: https://github.com/othneildrew/MrKonstantinSh/OpenScreen/blob/master/LICENSE
+[license-url]: https://github.com/MrKonstantinSh/OpenScreen/blob/master/LICENSE
 
