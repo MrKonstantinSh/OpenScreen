@@ -45,8 +45,8 @@
 Screenshots of a running application:
 
 <p align="center">
-  <img src="Images/OpenScreenApp.png" alt="Logo" width="700" height="auto" />
-  <img src="Images/Browser.png" alt="Logo" width="700" height="auto" />
+  <img src="Images/OpenScreenApp.png" alt="OpenScreenApp" width="700" height="auto" />
+  <img src="Images/Browser.png" alt="Browser" width="700" height="auto" />
 </p>
 
 **OpenScreen** is a desktop application that allows you to show your screen to friends and colleagues.
@@ -81,7 +81,7 @@ Screenshots of a running application:
 
 **OR**
 
-DOWNLOAD [OpenScreen-Installer.msi](https://github.com/MrKonstantinSh/OpenScreen/releases/download/v1.1/OpenScreen-Installer.msi)
+DOWNLOAD [OpenScreen-Installer.msi](https://github.com/MrKonstantinSh/OpenScreen/releases/download/v1.2/OpenScreen-Installer.msi)
 
 <!-- ROADMAP -->
 ## Roadmap
