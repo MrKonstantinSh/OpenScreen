@@ -1,4 +1,8 @@
-﻿using System;
+﻿using OpenScreen.Core.Screenshot;
+using OpenScreen.Core.Screenshot.WinFeatures;
+using OpenScreen.Core.Server;
+using OpenScreen.Properties;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -6,9 +10,6 @@ using System.Net.Sockets;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Threading;
-using OpenScreen.Core.Screenshot;
-using OpenScreen.Core.Screenshot.WinFeatures;
-using OpenScreen.Core.Server;
 
 namespace OpenScreen
 {
@@ -23,6 +24,9 @@ namespace OpenScreen
 
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
+            TbIpAddress.Text = Settings.Default["IpAddress"].ToString();
+            TbPort.Text = Settings.Default["Port"].ToString();
+
             // Filling the combo box with running applications.
             var runningApps = GetInfoAboutRunningApps();
             foreach (var runningApp in runningApps)
@@ -112,6 +116,10 @@ namespace OpenScreen
                     PrintInfo(UiConstants.ServerIsStarted + TbUrl.Text + UiConstants.NewLine);
 
                     timer.Start();
+
+                    Settings.Default["IpAddress"] = TbIpAddress.Text;
+                    Settings.Default["Port"] = TbPort.Text;
+                    Settings.Default.Save();
                 }
                 catch (FormatException)
                 {
