@@ -1,9 +1,9 @@
-﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
+﻿using OpenScreen.Core.Screenshot.WinFeatures;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Runtime.InteropServices;
-using OpenScreen.Core.Screenshot.WinFeatures;
+using System.Windows.Forms;
 
 namespace OpenScreen.Core.Screenshot
 {
@@ -89,7 +89,7 @@ namespace OpenScreen.Core.Screenshot
                 if (!ApplicationWindow.PrintWindow(windowHandle, hdc,
                     ApplicationWindow.DrawAllWindow))
                 {
-                    var error = Marshal.GetLastWin32Error();
+                    int error = Marshal.GetLastWin32Error();
                     throw new System.ComponentModel.Win32Exception($"An error occurred while creating a screenshot"
                         + $" of the application window. Error Number: {error}.");
                 }

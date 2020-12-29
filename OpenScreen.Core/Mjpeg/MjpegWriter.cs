@@ -25,7 +25,7 @@ namespace OpenScreen.Core.Mjpeg
         /// </summary>
         public void WriteHeaders()
         {
-            byte[] headers = Encoding.ASCII.GetBytes(MjpegConstants.ResponseHeaders);
+            var headers = Encoding.ASCII.GetBytes(MjpegConstants.ResponseHeaders);
 
             const int offset = 0;
             _stream.Write(headers, offset, headers.Length);
@@ -39,7 +39,7 @@ namespace OpenScreen.Core.Mjpeg
         /// <param name="imageStream">Stream of images.</param>
         public void WriteImage(MemoryStream imageStream)
         {
-            byte[] headers = Encoding.ASCII.GetBytes(
+            var headers = Encoding.ASCII.GetBytes(
                 MjpegConstants.GetImageInfoHeaders(imageStream.Length));
 
             const int offset = 0;
@@ -47,7 +47,7 @@ namespace OpenScreen.Core.Mjpeg
 
             imageStream.WriteTo(_stream);
 
-            byte[] endOfResponse = Encoding.ASCII.GetBytes(MjpegConstants.NewLine);
+            var endOfResponse = Encoding.ASCII.GetBytes(MjpegConstants.NewLine);
 
             _stream.Write(endOfResponse, offset, endOfResponse.Length);
 

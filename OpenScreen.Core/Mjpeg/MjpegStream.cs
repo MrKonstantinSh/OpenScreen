@@ -16,15 +16,14 @@ namespace OpenScreen.Core.Mjpeg
         /// <returns>An enumerated streams of images represented in MJPEG format.</returns>
         internal static IEnumerable<MemoryStream> GetMjpegStream(this IEnumerable<Image> images)
         {
-            using (var memoryStream = new MemoryStream())
-            {
-                foreach (var image in images)
-                {
-                    memoryStream.SetLength(0);
-                    image.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Jpeg);
+            using var memoryStream = new MemoryStream();
 
-                    yield return memoryStream;
-                }
+            foreach (var image in images)
+            {
+                memoryStream.SetLength(0);
+                image.Save(memoryStream, System.Drawing.Imaging.ImageFormat.Jpeg);
+
+                yield return memoryStream;
             }
         }
     }

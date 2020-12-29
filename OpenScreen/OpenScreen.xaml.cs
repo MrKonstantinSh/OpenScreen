@@ -29,7 +29,7 @@ namespace OpenScreen
 
             // Filling the combo box with running applications.
             var runningApps = GetInfoAboutRunningApps();
-            foreach (var runningApp in runningApps)
+            foreach (string runningApp in runningApps)
             {
                 CbAppWindow.Items.Add(runningApp);
             }
@@ -70,15 +70,17 @@ namespace OpenScreen
             var appList = new string[CbAppWindow.Items.Count];
             CbAppWindow.Items.CopyTo(appList, 0);
 
-            foreach (var item in appList)
+            var arrayOfRunningApps = runningApps as string[] ?? runningApps.ToArray();
+
+            foreach (string item in appList)
             {
-                if (!runningApps.Contains(item))
+                if (!arrayOfRunningApps.Contains(item))
                 {
                     CbAppWindow.Items.Remove(item);
                 }
             }
 
-            foreach (var runningApp in runningApps.Where(runningApp =>
+            foreach (string runningApp in arrayOfRunningApps.Where(runningApp =>
                 !CbAppWindow.Items.Contains(runningApp)))
             {
                 CbAppWindow.Items.Add(runningApp);
@@ -102,7 +104,7 @@ namespace OpenScreen
                     PrintInfo(UiConstants.ServerConfiguration);
 
                     var ipAddress = IPAddress.Parse(TbIpAddress.Text);
-                    var port = int.Parse(TbPort.Text);
+                    int port = int.Parse(TbPort.Text);
                     var fps = GetFpsFromComboBox(CbFps.Text);
 
                     CheckSocket(ipAddress, port);
@@ -189,11 +191,11 @@ namespace OpenScreen
             {
                 try
                 {
-                    testSocket.Shutdown(SocketShutdown.Both);
+                    testSocket?.Shutdown(SocketShutdown.Both);
                 }
                 catch
                 {
-                    testSocket.Close();
+                    testSocket?.Close();
                 }
             }
         }
@@ -249,7 +251,7 @@ namespace OpenScreen
         /// </summary>
         private void TimerTick(object sender, EventArgs e)
         {
-            var numberOfConnectedUsers = _streamingServer?.Clients?.Count ?? 0;
+            int numberOfConnectedUsers = _streamingServer?.Clients?.Count ?? 0;
 
             LblConnectedUsers.Content = UiConstants.ConnectedUsers + numberOfConnectedUsers;
         }
@@ -262,21 +264,20 @@ namespace OpenScreen
         /// <param name="fps">FPS stream.</param>
         private void StartStreamingServer(IPAddress ipAddress, int port, Fps fps)
         {
-
             if (RbFullScreen.IsChecked == true)
             {
                 var resolution = GetResolutionFromComboBox(CbScreenResolution.Text);
-                var isDisplayCursor = ChBFullScreenShowCursor.IsChecked != null
-                    && (bool)ChBFullScreenShowCursor.IsChecked;
+                bool isDisplayCursor = ChBFullScreenShowCursor.IsChecked != null 
+                                       && (bool)ChBFullScreenShowCursor.IsChecked;
 
                 _streamingServer = StreamingServer.GetInstance(resolution, fps, isDisplayCursor);
                 _streamingServer.Start(ipAddress, port);
             }
             else if (RbAppWindow.IsChecked == true)
             {
-                var applicationName = CbAppWindow.Text;
-                var isDisplayCursor = ChBAppWindowShowCursor.IsChecked != null
-                    && (bool)ChBAppWindowShowCursor.IsChecked;
+                string applicationName = CbAppWindow.Text;
+                bool isDisplayCursor = ChBAppWindowShowCursor.IsChecked != null
+                                       && (bool)ChBAppWindowShowCursor.IsChecked;
 
                 _streamingServer = StreamingServer.GetInstance(applicationName, fps, isDisplayCursor);
                 _streamingServer.Start(ipAddress, port);

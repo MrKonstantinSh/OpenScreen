@@ -1,4 +1,5 @@
-﻿using OpenScreen.Core.Screenshot;
+﻿using OpenScreen.Core.Mjpeg;
+using OpenScreen.Core.Screenshot;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -6,15 +7,13 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
-using OpenScreen.Core.Mjpeg;
-using System.Diagnostics;
 
 namespace OpenScreen.Core.Server
 {
     public class StreamingServer
     {
-        private static readonly object s_syncRoot = new object();
-        private static StreamingServer s_serverInstance;
+        private static readonly object SyncRoot = new object();
+        private static StreamingServer _serverInstance;
 
         private IEnumerable<Image> _images;
         private Socket _serverSocket;
@@ -66,12 +65,12 @@ namespace OpenScreen.Core.Server
         public static StreamingServer GetInstance(Resolution.Resolutions resolutions,
             Fps fps, bool isDisplayCursor)
         {
-            lock (s_syncRoot)
+            lock (SyncRoot)
             {
-                s_serverInstance ??= new StreamingServer(resolutions, fps, isDisplayCursor);
+                _serverInstance ??= new StreamingServer(resolutions, fps, isDisplayCursor);
             }
 
-            return s_serverInstance;
+            return _serverInstance;
         }
 
         /// <summary>
@@ -84,12 +83,12 @@ namespace OpenScreen.Core.Server
         public static StreamingServer GetInstance(string applicationName,
             Fps fps, bool isDisplayCursor)
         {
-            lock (s_syncRoot)
+            lock (SyncRoot)
             {
-                s_serverInstance ??= new StreamingServer(applicationName, fps, isDisplayCursor);
+                _serverInstance ??= new StreamingServer(applicationName, fps, isDisplayCursor);
             }
 
-            return s_serverInstance;
+            return _serverInstance;
         }
 
         /// <summary>
@@ -134,7 +133,7 @@ namespace OpenScreen.Core.Server
             {
                 _thread = null;
                 _images = null;
-                s_serverInstance = null;
+                _serverInstance = null;
             }
         }
 

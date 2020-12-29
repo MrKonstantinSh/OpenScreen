@@ -62,7 +62,7 @@ namespace OpenScreen.Core.Screenshot.WinFeatures
         /// of the copied string, not including the terminating null character.</returns>
         [DllImport("user32.dll", EntryPoint = "GetWindowText",
         ExactSpelling = false, CharSet = CharSet.Auto, SetLastError = true)]
-        private static extern int GetWindowTitile(IntPtr handle, StringBuilder buffer, int maxCount);
+        private static extern int GetWindowTitle(IntPtr handle, StringBuilder buffer, int maxCount);
 
         /// <summary>
         /// Retrieves information about the specified window.
@@ -136,10 +136,10 @@ namespace OpenScreen.Core.Screenshot.WinFeatures
         {
             var runningApps = new List<string>();
 
-            bool filterCallback(IntPtr handle, int callbackParam)
+            bool FilterCallback(IntPtr handle, int callbackParam)
             {
                 var stringBuilder = new StringBuilder(255);
-                int _ = GetWindowTitile(handle, stringBuilder, stringBuilder.Capacity + 1);
+                int _ = GetWindowTitle(handle, stringBuilder, stringBuilder.Capacity + 1);
                 string appTitle = stringBuilder.ToString();
 
                 if (IsWindowVisible(handle) && !string.IsNullOrEmpty(appTitle) && IsHasCaption(handle))
@@ -147,7 +147,8 @@ namespace OpenScreen.Core.Screenshot.WinFeatures
                     runningApps.Add(appTitle);
                 }
 
-                DwmGetWindowAttribute(handle, WindowAttributes.Cloaked, out bool windowAttribute, sizeof(int));
+                DwmGetWindowAttribute(handle, WindowAttributes.Cloaked, out bool windowAttribute,
+                    sizeof(int));
 
                 if (IsIconic(handle) || windowAttribute)
                 {
@@ -157,7 +158,7 @@ namespace OpenScreen.Core.Screenshot.WinFeatures
                 return true;
             }
 
-            EnumDesktopWindows(IntPtr.Zero, filterCallback, IntPtr.Zero);
+            EnumDesktopWindows(IntPtr.Zero, FilterCallback, IntPtr.Zero);
 
             return runningApps;
         }

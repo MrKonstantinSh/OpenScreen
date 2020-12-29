@@ -46,21 +46,16 @@ namespace OpenScreen.Core.Screenshot
         /// <returns>Width and height of resolution.</returns>
         public static Size GetResolutionSize(Resolutions resolution)
         {
-            switch (resolution)
+            return resolution switch
             {
-                case Resolutions.OneThousandAndEightyP:
-                    return new Size(OneThousandAndEightyPWidth, OneThousandAndEightyPHeight);
-                case Resolutions.SevenHundredAndTwentyP:
-                    return new Size(SevenHundredAndTwentyPWidth, SevenHundredAndTwentyPHeight);
-                case Resolutions.FourHundredAndEightyP:
-                    return new Size(FourHundredAndEightyPWidth, FourHundredAndEightyPHeight);
-                case Resolutions.ThreeHundredAndSixtyP:
-                    return new Size(ThreeHundredAndSixtyPWidth, ThreeHundredAndSixtyPHeight);
-                case Resolutions.TwoHundredAndFortyP:
-                    return new Size(TwoHundredAndFortyPWidth, TwoHundredAndFortyPHeight);
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(resolution), resolution, null);
-            }
+                Resolutions.OneThousandAndEightyP => new Size(OneThousandAndEightyPWidth, OneThousandAndEightyPHeight),
+                Resolutions.SevenHundredAndTwentyP => new Size(SevenHundredAndTwentyPWidth,
+                    SevenHundredAndTwentyPHeight),
+                Resolutions.FourHundredAndEightyP => new Size(FourHundredAndEightyPWidth, FourHundredAndEightyPHeight),
+                Resolutions.ThreeHundredAndSixtyP => new Size(ThreeHundredAndSixtyPWidth, ThreeHundredAndSixtyPHeight),
+                Resolutions.TwoHundredAndFortyP => new Size(TwoHundredAndFortyPWidth, TwoHundredAndFortyPHeight),
+                _ => throw new ArgumentOutOfRangeException(nameof(resolution), resolution, null)
+            };
         }
     }
 }
