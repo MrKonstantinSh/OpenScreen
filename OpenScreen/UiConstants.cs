@@ -59,5 +59,14 @@
         public const string ServerIsStopped = "The server is stopped.\n";
 
         #endregion
+
+        #region CommandLine Args
+
+        public const string IpArgs = "--ip";
+        public const string PortArgs = "--port";
+        public const string HideWindowArgs = "--hide";
+        public const string StartServerArgs = "--start";
+
+        #endregion
     }
 }
