@@ -6,10 +6,10 @@
         mc:Ignorable="d"
         Title="OpenScreen" MinHeight="430" MinWidth="600" Height="430" Width="650"
         Icon="Resources/favicon.ico" Loaded="MainWindow_OnLoaded" Closed="MainWindow_OnClosed"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen" Visibility="Visible">
     <Grid>
         <Label Content="IP Address:" HorizontalAlignment="Left" Margin="10,5,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.021,-0.367" Name="LblIpAddress"/>
-        <TextBox Height="22" Margin="84,8,219,0" TextWrapping="NoWrap" Text="" VerticalAlignment="Top" x:Name="TbIpAddress"/>
+        <TextBox Height="22" Margin="84,8,219,0" TextWrapping="NoWrap" VerticalAlignment="Top" x:Name="TbIpAddress"/>
         <Label Content="Port:" Margin="0,5,179.6,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="34" Name="LblPort"/>
         <TextBox Height="22" Margin="0,8,15,0" TextWrapping="NoWrap" Text="3030" VerticalAlignment="Top" HorizontalAlignment="Right" Width="160" Name="TbPort"/>
         <CheckBox Content="Remember IP Address and Port" HorizontalAlignment="Left" Margin="83,32,0,0" VerticalAlignment="Top" IsChecked="True"/>

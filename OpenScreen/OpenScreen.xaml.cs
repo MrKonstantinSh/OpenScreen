@@ -35,7 +35,52 @@ namespace OpenScreen
             }
 
             CbAppWindow.SelectedIndex = 0;
+
+            CmdArgs_Validation();
         }
+
+
+        private void CmdArgs_Validation()
+        {
+            bool hideWindowBool = false;
+            bool startStreamOnStart = false;
+            string[] argsList = Environment.GetCommandLineArgs();
+            for (int i = 0; i < argsList.Length; i++)
+            {
+                if (argsList[i].Contains(UiConstants.IpArgs))
+                {
+                    TbIpAddress.Text = argsList[i + 1]; 
+                }
+
+                if (argsList[i].Contains(UiConstants.PortArgs))
+                {
+                    TbPort.Text = argsList[i + 1];
+                }
+
+
+                if (argsList[i].Contains(UiConstants.HideWindowArgs))
+                {
+                    hideWindowBool = true;
+                }
+
+                if (argsList[i].Contains(UiConstants.StartServerArgs))
+                {
+                    startStreamOnStart = true;
+                }
+            }
+
+
+            if (startStreamOnStart)
+            {
+                BtnStartStopStream_Click(null, null);
+            }
+
+            if (hideWindowBool)
+            {
+                Visibility = Visibility.Hidden;
+            }
+        }
+
 
         private void RbOption_Checked(object sender, RoutedEventArgs e)
         {
